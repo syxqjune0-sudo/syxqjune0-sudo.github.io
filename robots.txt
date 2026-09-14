@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://syxqjune0-sudo.github.io/sitemap.xml
