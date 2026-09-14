@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>体系文件开发 · 中小企业 ISO 体系专家</title>
+<style>
+:root{--blue:#185FA5;--teal:#0F6E56;--coral:#993C1D;--ink:#1c1c1a;--mut:#5F5E5A;--bg:#ffffff;--soft:#f5f8fb;--line:#e3e1d8;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);background:var(--bg);line-height:1.7;}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:5}
+.nav{display:flex;align-items:center;height:62px;gap:22px}
+.logo{font-size:18px;font-weight:600;color:var(--blue)}
+.nav .links{display:flex;gap:20px;margin-left:auto;font-size:14px;color:var(--mut)}
+.nav .links a:hover{color:var(--blue)}
+.btn{background:var(--blue);color:#fff;padding:9px 18px;border-radius:9px;font-size:14px;font-weight:500;display:inline-block}
+.btn:hover{background:#0c447c}
+.btn.t{background:transparent;color:var(--blue);border:1px solid var(--blue)}
+section{padding:64px 0}
+.hero{background:linear-gradient(180deg,#eef4fb,#ffffff);}
+.hero h1{font-size:38px;line-height:1.25;margin-bottom:14px;max-width:760px}
+.hero p{font-size:17px;color:var(--mut);max-width:620px;margin-bottom:24px}
+.hero .cta{display:flex;gap:12px}
+.tag{display:inline-block;background:#E6F1FB;color:var(--blue);border-radius:6px;padding:2px 10px;font-size:12px;margin:0 6px 6px 0}
+h2{font-size:26px;margin-bottom:8px}
+.sub{color:var(--mut);margin-bottom:30px;font-size:15px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:22px}
+.card h3{font-size:17px;margin-bottom:8px;color:var(--blue)}
+.card p{font-size:14px;color:var(--mut)}
+.iso{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.iso b{display:block;font-size:16px;color:var(--teal);margin-bottom:4px}
+.iso span{font-size:12.5px;color:var(--mut)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.split ul{list-style:none}
+.split li{padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.split li:before{content:"✓";color:var(--teal);font-weight:700;margin-right:8px}
+.case{background:var(--soft);border-left:3px solid var(--teal);border-radius:10px;padding:18px}
+.case b{color:var(--ink)}
+.blog a{padding:14px 16px;border:1px solid var(--line);border-radius:10px;display:block;margin-bottom:12px;font-size:15px}
+.blog a:hover{border-color:var(--blue);background:var(--soft)}
+form{display:grid;gap:12px;max-width:460px}
+input,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;font-family:inherit;font-size:14px}
+footer{background:#11233a;color:#cdd6e2;padding:34px 0;font-size:13.5px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+footer a{color:#9db8d8}
+@media(max-width:780px){.grid3,.grid4{grid-template-columns:1fr 1fr}.split{grid-template-columns:1fr}.nav .links{display:none}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <div class="logo">体系文件开发</div>
+  <nav class="links">
+    <a href="#home">首页</a>
+    <a href="#svc">服务</a>
+    <a href="#iso">ISO 体系</a>
+    <a href="#why">为什么需要</a>
+    <a href="#case">案例</a>
+    <a href="#blog">博客</a>
+    <a href="#contact">联系</a>
+  </nav>
+  <a href="#contact" class="btn">免费咨询</a>
+</div></header>
+
+<section class="hero" id="home"><div class="wrap">
+  <h1>让中小企业用最小成本，<br>搭起真正能用的 ISO 体系</h1>
+  <p>我们提供 ISO 体系文件生成与轻量辅导——质量手册、程序文件、作业指导书、记录表单，几天出第一版，帮你跨过投标准入与验厂门槛。</p>
+  <div class="cta">
+    <a href="#contact" class="btn">留言"体系"免费咨询</a>
+    <a href="#iso" class="btn t">看看覆盖哪些标准</a>
+  </div>
+  <div style="margin-top:22px">
+    <span class="tag">ISO 9001 质量</span><span class="tag">ISO 27001 信息</span><span class="tag">ISO 14001 环境</span><span class="tag">ISO 45001 职业健康</span><span class="tag">ISO 20000 IT</span><span class="tag">ISO 22301 业务连续</span><span class="tag">ISO 27701 隐私</span>
+  </div>
+</div></section>
+
+<section id="svc"><div class="wrap">
+  <h2>我们的服务</h2>
+  <p class="sub">从文件到落地，覆盖中小企业最需要的那几步</p>
+  <div class="grid3">
+    <div class="card"><h3>ISO 体系文件生成</h3><p>按行业与规模定制四级文件（手册/程序/指导书/记录），模板化起步、快速迭代，不请咨询公司也能有像样的底子。</p></div>
+    <div class="card"><h3>ISO 体系咨询</h3><p>9001 / 27001 / 14001 等标准怎么选、怎么落地、怎么过审，给你直白可执行的建议，不绕术语。</p></div>
+    <div class="card"><h3>技术服务</h3><p>体系文件开发系统、定制工具与自动化，把重复劳动交给系统，让人做判断。</p></div>
+  </div>
+</div></section>
+
+<section id="iso" style="background:var(--soft)"><div class="wrap">
+  <h2>覆盖的 ISO 体系</h2>
+  <p class="sub">主流管理体系标准，按你的业务挑</p>
+  <div class="grid4">
+    <div class="iso"><b>ISO 9001</b><span>质量管理体系</span></div>
+    <div class="iso"><b>ISO 27001</b><span>信息安全管理</span></div>
+    <div class="iso"><b>ISO 14001</b><span>环境管理体系</span></div>
+    <div class="iso"><b>ISO 45001</b><span>职业健康安全</span></div>
+    <div class="iso"><b>ISO 20000</b><span>IT 服务管理</span></div>
+    <div class="iso"><b>ISO 22301</b><span>业务连续性</span></div>
+    <div class="iso"><b>ISO 27701</b><span>隐私信息管理</span></div>
+    <div class="iso"><b>更多</b><span>按需扩展</span></div>
+  </div>
+</div></section>
+
+<section id="why"><div class="wrap split">
+  <div>
+    <h2>为什么中小企业也需要 ISO 体系</h2>
+    <p class="sub">不是大企业的专利，而是"从活下来到活得好"的底层防护</p>
+    <a href="#blog" class="btn t">读详细文章</a>
+  </div>
+  <ul>
+    <li>投标准入的硬门槛——没认证连报名表都递不进</li>
+    <li>客户验厂的信任状——同等条件下更容易过审</li>
+    <li>管理从人治到流程——经验沉淀成文件，人不走政不息</li>
+    <li>降本增效看得见——标准清晰，返工扯皮自然少</li>
+    <li>政策红利——高新申报、政府补贴的加分项</li>
+  </ul>
+</div></section>
+
+<section id="case" style="background:var(--soft)"><div class="wrap">
+  <h2>客户案例</h2>
+  <p class="sub">真实场景，名称已脱敏</p>
+  <div class="grid3">
+    <div class="case"><b>某软件外包团队</b><p style="color:var(--mut);font-size:14px;margin-top:6px">靠 27001 体系文件拿下金融客户验厂，首单合同额提升明显。</p></div>
+    <div class="case"><b>某制造企业</b><p style="color:var(--mut);font-size:14px;margin-top:6px">9001 文件两天出底稿，顺利进入央企供应商短名单。</p></div>
+    <div class="case"><b>某检测工作室</b><p style="color:var(--mut);font-size:14px;margin-top:6px">用模板化文件替代咨询公司，启动成本降到原来的零头。</p></div>
+  </div>
+</div></section>
+
+<section id="blog"><div class="wrap">
+  <h2>博客 / 资讯</h2>
+  <p class="sub">市场岗每周更新，承接官网流量</p>
+  <div class="blog">
+    <a href="blog/20260907_iso-system.html">📄 中小企业为什么需要 ISO 体系文件</a>
+    <a href="blog/20260914_iso9001-vs-27001.html">📄 ISO 9001 与 27001 怎么选</a>
+  </div>
+</div></section>
+
+<section id="contact" style="background:var(--soft)"><div class="wrap">
+  <h2>联系我们</h2>
+  <p class="sub">留言"体系"，送你一份《ISO 9001 文件清单速览》</p>
+  <form onsubmit="event.preventDefault();alert('已收到，我们会尽快联系你（演示表单，未接入后端）')">
+    <input placeholder="你的称呼" required>
+    <input placeholder="联系电话 / 微信" required>
+    <input placeholder="想做哪类体系（如 9001 / 27001）">
+    <textarea rows="3" placeholder="一句话需求"></textarea>
+    <button class="btn" type="submit">提交咨询</button>
+  </form>
+</div></section>
+
+<footer><div class="wrap">
+  <div>体系文件开发 · 中小企业 ISO 体系专家</div>
+  <div>本站由 AI 网站运维人员开发维护 ｜ 内容最终解释权归运营方</div>
+</div></footer>
+</body>
+</html>
