@@ -83,6 +83,24 @@ footer a{color:#9db8d8}
 /* ===== Disclaimer ===== */
 .disclaimer{background:#fbfbf9;border-top:1px solid var(--line);color:var(--mut);font-size:12.5px;padding:18px 0}
 
+/* ===== Floating Contact Buttons ===== */
+.float-contact{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:100}
+.float-btn{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.15);transition:transform .2s,box-shadow .2s;font-size:20px;color:#fff}
+.float-btn:hover{transform:scale(1.08);box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.float-btn.wechat{background:#07C160}
+.float-btn.qq{background:#12B7F5}
+.float-dialog{position:fixed;bottom:84px;right:24px;background:#fff;border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.15);padding:20px;width:260px;display:none;z-index:101}
+.float-dialog.show{display:block}
+.float-dialog h4{font-size:15px;margin-bottom:10px;color:var(--ink)}
+.float-dialog p{font-size:13px;color:var(--mut);margin-bottom:8px}
+.float-dialog .wechat-id{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:10px;font-size:14px;font-weight:600;color:var(--teal);text-align:center;margin-bottom:10px;word-break:break-all}
+.float-dialog .copy-btn{background:var(--blue);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;width:100%}
+.float-dialog .copy-btn:hover{background:#0c447c}
+.float-dialog .qq-btn{display:block;background:#12B7F5;color:#fff;text-align:center;border-radius:8px;padding:10px;font-size:14px;text-decoration:none;margin-bottom:8px}
+.float-dialog .qq-btn:hover{background:#0ea3db}
+.float-dialog .close-btn{position:absolute;top:10px;right:12px;background:none;border:none;font-size:18px;color:var(--mut);cursor:pointer}
+.float-dialog .close-btn:hover{color:var(--ink)}
+
 /* ===== Responsive ===== */
 @media(max-width:780px){
   .grid3,.grid4{grid-template-columns:1fr 1fr}
@@ -90,4 +108,7 @@ footer a{color:#9db8d8}
   .nav .links{display:none}
   .hero h1{font-size:28px}
   .page-hero h1{font-size:24px}
+  .float-contact{bottom:16px;right:16px}
+  .float-btn{width:42px;height:42px;font-size:18px}
+  .float-dialog{bottom:70px;right:16px;width:240px}
 }
