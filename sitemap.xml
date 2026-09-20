@@ -6,15 +6,47 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://syxqjune0-sudo.github.io/blog/20260907_iso-system.html</loc>
+    <loc>https://syxqjune0-sudo.github.io/services.html</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://syxqjune0-sudo.github.io/iso.html</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://syxqjune0-sudo.github.io/why.html</loc>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://syxqjune0-sudo.github.io/cases.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://syxqjune0-sudo.github.io/industry.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://syxqjune0-sudo.github.io/subsidy.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://syxqjune0-sudo.github.io/blog.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://syxqjune0-sudo.github.io/contact.html</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://syxqjune0-sudo.github.io/blog/20260907_iso-system.html</loc>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://syxqjune0-sudo.github.io/blog/20260914_iso9001-vs-27001.html</loc>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://syxqjune0-sudo.github.io/blog/20260919_tisax.html</loc>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
 </urlset>
