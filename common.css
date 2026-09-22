@@ -57,13 +57,14 @@ section{padding:72px 0}
 .hero .btn.t{background:transparent;color:#fff;border-color:rgba(255,255,255,.6)}
 .hero .btn.t:hover{background:rgba(255,255,255,.12)}
 
-/* ===== Stats Bar ===== */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:#fff;border-radius:16px;box-shadow:var(--shadow-lg);margin-top:-48px;position:relative;z-index:2;overflow:hidden}
-.stat{padding:28px 20px;text-align:center;border-right:1px solid var(--line)}
-.stat:last-child{border-right:none}
-.stat .num{font-size:36px;font-weight:800;color:var(--blue);line-height:1;margin-bottom:6px;letter-spacing:-1px}
-.stat .num span{font-size:18px;font-weight:600}
-.stat .label{font-size:13px;color:var(--mut);letter-spacing:.5px}
+/* ===== Stats Bar (legacy) / Value Props ===== */
+.vprops{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:16px;box-shadow:var(--shadow-lg);margin-top:-48px;position:relative;z-index:2;overflow:hidden}
+.vp{padding:24px 20px;text-align:center;border-right:1px solid var(--line);transition:background .2s}
+.vp:last-child{border-right:none}
+.vp:hover{background:var(--soft)}
+.vp-icon{font-size:20px;color:var(--blue);margin-bottom:8px}
+.vp-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.vp-desc{font-size:13px;color:var(--mut);line-height:1.5}
 
 /* ===== Tags ===== */
 .tag{display:inline-block;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:12px;margin:0 6px 8px 0;backdrop-filter:blur(4px);transition:background .2s}
@@ -176,9 +177,8 @@ footer a:hover{color:#fff}
   .hero h1{font-size:30px}
   .hero p{font-size:15px}
   .page-hero h1{font-size:26px}
-  .stats{grid-template-columns:1fr 1fr;margin-top:-32px}
-  .stat{padding:20px 16px;border-bottom:1px solid var(--line)}
-  .stat .num{font-size:28px}
+  .vprops{grid-template-columns:1fr 1fr;margin-top:-32px}
+  .vp{padding:18px 16px;border-bottom:1px solid var(--line)}
   .timeline{grid-template-columns:1fr 1fr;gap:20px}
   .timeline::before{display:none}
   .float-contact{bottom:18px;right:18px}
@@ -189,5 +189,5 @@ footer a:hover{color:#fff}
 }
 @media(max-width:480px){
   .grid3,.grid4{grid-template-columns:1fr}
-  .stats{grid-template-columns:1fr 1fr}
+  .vprops{grid-template-columns:1fr 1fr}
 }
