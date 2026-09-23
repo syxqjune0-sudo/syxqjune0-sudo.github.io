@@ -1,0 +1,92 @@
+{{HEAD}}
+<title>联系我们_免费获取ISO体系方案</title>
+<meta name="description" content="留下你的需求，顾问会在24小时内联系你，免费提供初步ISO体系规划建议。">
+<link rel="stylesheet" href="common.css">
+{{BODY}}
+<section class="page-hero"><div class="wrap">
+  <h1>免费获取你的体系方案</h1>
+  <p>留下你的需求，顾问会在 24 小时内联系你，免费提供初步体系规划建议</p>
+</div></section>
+
+<section style="background:var(--soft)"><div class="wrap">
+  <div class="split">
+    <div>
+      <h2>咨询表单</h2>
+      <p class="sub">填写基本信息，顾问会主动联系你</p>
+      <form id="contactForm" novalidate>
+        <input name="name" placeholder="你的称呼" required>
+        <input name="contact" placeholder="联系电话 / 微信" required>
+        <input name="topic" placeholder="想做哪类体系（如 9001 / 27001）">
+        <textarea name="content" rows="3" placeholder="一句话需求"></textarea>
+        <button class="btn" type="submit" id="contactSubmit">提交咨询</button>
+        <p id="contactMsg" style="font-size:13.5px;margin:2px 0 0;min-height:20px"></p>
+      </form>
+    </div>
+    <div>
+      <h2>你也可以直接问</h2>
+      <p class="sub" style="margin-bottom:16px">不确定该做哪个体系？不确定预算多少？都没关系，先聊聊</p>
+      <ul style="list-style:none">
+        <li style="padding:10px 0;border-bottom:1px solid var(--line);font-size:15px"><span style="color:var(--teal);font-weight:700;margin-right:8px">✓</span>免费初步评估，不收费</li>
+        <li style="padding:10px 0;border-bottom:1px solid var(--line);font-size:15px"><span style="color:var(--teal);font-weight:700;margin-right:8px">✓</span>顾问一对一沟通，不是客服转接</li>
+        <li style="padding:10px 0;border-bottom:1px solid var(--line);font-size:15px"><span style="color:var(--teal);font-weight:700;margin-right:8px">✓</span>24 小时内响应</li>
+        <li style="padding:10px 0;font-size:15px"><span style="color:var(--teal);font-weight:700;margin-right:8px">✓</span>信息严格保密</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<script>
+var CONTACT_API = "http://127.0.0.1:8766";
+
+(function () {
+  var form = document.getElementById("contactForm");
+  var btn = document.getElementById("contactSubmit");
+  var msg = document.getElementById("contactMsg");
+  if (!form) return;
+
+  function show(text, color) {
+    msg.textContent = text;
+    msg.style.color = color;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var data = {
+      name: (form.name.value || "").trim(),
+      contact: (form.contact.value || "").trim(),
+      topic: (form.topic.value || "").trim(),
+      content: (form.content.value || "").trim()
+    };
+    if (!data.name || !data.contact) {
+      show("请填写称呼和联系方式。", "#c0392b");
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "提交中…";
+    show("正在提交…", "var(--mut)");
+
+    fetch(CONTACT_API + "/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    })
+      .then(function (r) { return r.json().catch(function () { return {}; }); })
+      .then(function (res) {
+        if (res && res.ok) {
+          form.reset();
+          show("已收到，我们会尽快联系你。", "var(--teal)");
+        } else {
+          show((res && res.msg) || "提交失败，请稍后重试。", "#c0392b");
+        }
+      })
+      .catch(function () {
+        show("提交暂不可用，可直接微信/电话联系我们。", "#c0392b");
+      })
+      .then(function () {
+        btn.disabled = false;
+        btn.textContent = "提交咨询";
+      });
+  });
+})();
+</script>
