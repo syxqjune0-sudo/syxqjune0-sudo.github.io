@@ -34,7 +34,7 @@ SITE_BASE = 'https://syxqjune0-sudo.github.io/'
 NAV_ITEMS = [
     ('index.html',    '首页'),
     ('services.html', '服务'),
-    ('iso.html',      'ISO 体系'),
+    ('iso.html',      '标准体系'),
     ('why.html',      '为什么需要'),
     ('cases.html',    '场景'),
     ('industry.html', '行业'),
