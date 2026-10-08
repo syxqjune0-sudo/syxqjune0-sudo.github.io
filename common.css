@@ -185,6 +185,17 @@ footer a:hover{color:#fff}
 .float-dialog .close-btn{position:absolute;top:12px;right:14px;background:none;border:none;font-size:20px;color:var(--mut);cursor:pointer;transition:color .2s}
 .float-dialog .close-btn:hover{color:var(--ink)}
 
+/* ===== Video Cards ===== */
+.video-card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:box-shadow .25s,transform .25s;cursor:pointer}
+.video-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.08);transform:translateY(-3px)}
+.v-thumb{position:relative;background:linear-gradient(135deg,#eef4ff,#f0f6ff);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}
+.v-play{width:56px;height:56px;background:rgba(31,111,237,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;padding-left:4px;transition:transform .2s}
+.video-card:hover .v-play{transform:scale(1.1)}
+.v-dur{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;padding:3px 8px;border-radius:4px}
+.v-info{padding:16px 18px}
+.v-info h3{font-size:15px;font-weight:600;color:var(--ink);margin:0 0 8px;line-height:1.45}
+.v-info p{font-size:13px;color:var(--mut);margin:0;line-height:1.6}
+
 /* ===== Responsive ===== */
 @media(max-width:780px){
   .grid3,.grid4{grid-template-columns:1fr 1fr}

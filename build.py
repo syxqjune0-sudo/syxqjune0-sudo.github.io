@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-网站构建脚本 — 模板拼装 + 博客 Markdown 转 HTML
+网站构建脚本 — 模板拼装 + 博客 Markdown 转 HTML + 渠道分发
 用法: python build.py
 
 模板系统:
@@ -12,9 +12,11 @@
 
 博客源文件:
   blog/src/{date}_{slug}.md — Markdown + YAML front matter
-  构建后输出: blog/{date}_{slug}.html
+  构建后输出:
+    1. blog/{date}_{slug}.html        — 官网博客页 (带导航/页脚/外部 CSS)
+    2. 市场内容/{date}_{slug}.html     — 渠道分发版 (自包含 HTML，适配公众号/知乎)
 
-运行后自动生成根目录 HTML 和博客 HTML。
+运行后自动生成官网页面、博客文章和渠道分发 HTML。
 """
 
 import os
@@ -27,6 +29,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, '_templates')
 SRC_DIR = os.path.join(BASE_DIR, '_src')
 BLOG_SRC_DIR = os.path.join(BASE_DIR, 'blog', 'src')
 BLOG_DIR = os.path.join(BASE_DIR, 'blog')
+CHANNEL_DIR = os.path.join(os.path.dirname(BASE_DIR), '市场内容')
 
 SITE_BASE = 'https://syxqjune0-sudo.github.io/'
 
@@ -35,6 +38,7 @@ NAV_ITEMS = [
     ('index.html',    '首页'),
     ('services.html', '服务'),
     ('iso.html',      '标准体系'),
+    ('videos.html',   '视频'),
     ('why.html',      '为什么需要'),
     ('cases.html',    '场景'),
     ('industry.html', '行业'),
@@ -121,7 +125,10 @@ def parse_frontmatter(text):
         if ':' in line:
             key, val = line.split(':', 1)
             key = key.strip()
-            val = val.strip().strip('"').strip("'")
+            val = val.strip()
+            # 只去掉成对的外层引号，保留内容中的引号
+            if len(val) >= 2 and val[0] == val[-1] and val[0] in ('"', "'"):
+                val = val[1:-1]
             meta[key] = val
     return meta, parts[2].strip()
 
@@ -244,6 +251,130 @@ def build_blog_post(md_file):
     print(f'  博客: {slug}.html')
     return {'slug': slug, 'title': title, 'date': date, 'description': desc}
 
+# ---------------------------------------------------------------- 渠道分发
+CHANNEL_CSS = '''
+body{margin:0;padding:0;background:#f4f6f9;color:#1f2329;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  line-height:1.85;font-size:15px}
+.wrap{max-width:720px;margin:28px auto;background:#fff;
+  border:1px solid #e6ebf1;border-radius:12px;overflow:hidden;
+  box-shadow:0 2px 14px rgba(0,0,0,.05)}
+.banner{background:linear-gradient(135deg,#1f6feb,#3b82f6);padding:30px 34px;color:#fff}
+.banner .tag{font-size:13px;letter-spacing:1px;opacity:.9}
+.banner h1{margin:12px 0 6px;font-size:25px;line-height:1.4;font-weight:700}
+.banner .date{font-size:13px;opacity:.85}
+.body{padding:30px 34px 36px}
+.body h2{font-size:19px;margin:30px 0 14px;padding-left:12px;
+  border-left:4px solid #1f6feb;color:#1f3a5f}
+.body p{margin:0 0 16px;font-size:15.5px;color:#475569}
+.body strong{color:#2c3e50}
+.body ul{margin:0 0 16px;padding-left:22px}
+.body li{margin:9px 0;font-size:15px;color:#2c333d}
+.body hr{border:none;border-top:1px solid #eef0f3;margin:28px 0}
+.body blockquote{margin:16px 0;padding:12px 18px;background:#f0f6ff;
+  border-left:4px solid #2f6fed;border-radius:6px;color:#34415c;font-size:15px}
+.body em{color:#6b7280;font-size:14px}
+.cta{background:#eef4ff;border:1px solid #cfe0ff;border-radius:10px;
+  padding:20px 22px;margin:8px 0 6px}
+.cta p{margin:0 0 8px;font-size:16px;font-weight:700;color:#1f3a5f}
+.cta .sub{margin:0;font-size:15px;color:#475569;font-weight:400}
+.cta .kw{color:#1f6feb;font-size:16px;letter-spacing:1px}
+.foot{margin:26px 0 0;font-size:13px;color:#94a3b8;text-align:center;
+  padding:0 34px 28px}
+'''
+
+
+def build_channel_post(md_file):
+    """构建渠道分发版本 — 自包含 HTML，<style> 在 head 中，适配公众号/知乎等。"""
+    text = read(md_file)
+    meta, content = parse_frontmatter(text)
+
+    title = meta.get('title', '博客')
+    date = meta.get('date', '')
+    slug = os.path.basename(md_file).replace('.md', '')
+
+    body_html = md_to_html(content)
+
+    # 从 Markdown 正文末尾提取 CTA 和署名 (--- 分隔后的部分)
+    cta_html = ''
+    footer_text = ''
+    if '<hr>' in body_html:
+        parts = body_html.rsplit('<hr>', 1)
+        body_html = parts[0].rstrip()
+        tail = parts[1].strip()
+
+        # 最后一段 <em>...</em> 作为署名
+        em_match = re.search(r'<p>\s*<em>(.+?)</em>\s*</p>', tail, re.DOTALL)
+        if em_match:
+            footer_text = em_match.group(1)
+            tail = tail[:em_match.start()] + tail[em_match.end():]
+
+        # 剩余内容作为 CTA
+        tail = tail.strip()
+        if tail:
+            # 把关键词「XXX」高亮
+            tail = re.sub(
+                r'「(.+?)」',
+                r'<span class="kw">「\1」</span>',
+                tail,
+            )
+            # 去掉所有 <p> 标签，提取纯文本行
+            lines = []
+            for chunk in re.split(r'</?p>', tail):
+                chunk = chunk.strip()
+                if chunk:
+                    # 去掉 <strong> 标签但保留内容
+                    chunk = re.sub(r'</?strong>', '', chunk).strip()
+                    if chunk:
+                        lines.append(chunk)
+
+            if lines:
+                # 第一行作为 CTA 标题，其余作为副文本
+                cta_title = lines[0]
+                cta_html = f'<div class="cta"><p>{cta_title}</p>'
+                if len(lines) > 1:
+                    sub_text = '<br>'.join(lines[1:])
+                    cta_html += f'<p class="sub">{sub_text}</p>'
+                cta_html += '</div>'
+
+    # 生成输出文件名: YYYYMMDD_中文短标题.html
+    date_compact = date.replace('-', '')
+    # 从 title 提取短标题 (取第一个？或！前的部分，或前 30 字)
+    short = re.split(r'[？?！!]', title)[0] if re.search(r'[？?！!]', title) else title[:30]
+    short = short.strip().replace('"', '').replace("'", '').replace('/', '与').replace('\\', '')
+    short = short.replace(':', '：').replace('|', '-').replace('<', '').replace('>', '')
+    short = short.replace('*', '').replace('?', '').replace('"', '')
+    out_name = f'{date_compact}_{short}.html'
+    out_file = os.path.join(CHANNEL_DIR, out_name)
+
+    result = f'''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title}</title>
+<style>{CHANNEL_CSS}</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="banner">
+    <div class="tag">体系文件开发团队 · 中小企业 ISO 实务</div>
+    <h1>{title}</h1>
+    <div class="date">{date} · 面向中小企业老板 / 管理者</div>
+  </div>
+  <div class="body">
+    {body_html}
+    {cta_html}
+  </div>
+  <div class="foot">{footer_text}</div>
+</div>
+</body>
+</html>'''
+
+    write(out_file, result)
+    print(f'  渠道: {out_name}')
+
+
 def get_all_posts():
     """获取所有博客文章元数据"""
     posts = []
@@ -328,6 +459,7 @@ def build_sitemap():
         'services.html': '0.9',
         'iso.html': '0.9',
         'contact.html': '0.9',
+        'videos.html': '0.8',
         'why.html': '0.8',
         'cases.html': '0.8',
         'industry.html': '0.8',
@@ -367,7 +499,7 @@ def build_all():
     print('=' * 50)
 
     # 1. 构建所有页面
-    print('\n[1/4] 构建页面...')
+    print('\n[1/5] 构建页面...')
     for src_file in sorted(glob.glob(os.path.join(SRC_DIR, '*.html'))):
         page_file = os.path.basename(src_file)
         result = render_page(page_file, '')
@@ -376,24 +508,39 @@ def build_all():
         print(f'  页面: {page_file}')
 
     # 2. 构建博客文章
-    print('\n[2/4] 构建博客...')
+    print('\n[2/5] 构建博客...')
     if os.path.exists(BLOG_SRC_DIR):
         for md_file in sorted(glob.glob(os.path.join(BLOG_SRC_DIR, '*.md'))):
             build_blog_post(md_file)
     else:
         print('  (无博客源文件，跳过)')
 
-    # 3. 重新构建博客列表和首页博客区 (依赖博客元数据)
-    print('\n[3/4] 更新博客列表...')
+    # 3. 构建渠道分发版本 (同一份 Markdown → 自包含 HTML → 市场内容/)
+    print('\n[3/5] 构建渠道分发...')
+    if os.path.exists(BLOG_SRC_DIR):
+        md_files = glob.glob(os.path.join(BLOG_SRC_DIR, '*.md'))
+        if md_files:
+            os.makedirs(CHANNEL_DIR, exist_ok=True)
+            for md_file in sorted(md_files):
+                build_channel_post(md_file)
+        else:
+            print('  (无博客源文件，跳过)')
+    else:
+        print('  (无博客源文件，跳过)')
+
+    # 4. 重新构建博客列表和首页博客区 (依赖博客元数据)
+    print('\n[4/5] 更新博客列表...')
     if os.path.exists(BLOG_SRC_DIR) and glob.glob(os.path.join(BLOG_SRC_DIR, '*.md')):
         build_blog_listing()
 
-    # 4. 更新 sitemap
-    print('\n[4/4] 更新 Sitemap...')
+    # 5. 更新 sitemap
+    print('\n[5/5] 更新 Sitemap...')
     build_sitemap()
 
     print('\n' + '=' * 50)
     print('构建完成!')
+    print(f'  官网: {BASE_DIR}')
+    print(f'  渠道: {CHANNEL_DIR}')
     print('=' * 50)
 
 if __name__ == '__main__':
