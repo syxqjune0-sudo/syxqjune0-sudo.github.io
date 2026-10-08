@@ -13,9 +13,9 @@
   <h2>ISO 9001 · 质量管理基础</h2>
   <p class="sub">最通用的管理体系，投标验厂的标配</p>
   <div class="grid3" id="v-9001">
-    <div class="video-card" data-vid="" data-platform="">
-      <div class="v-thumb"><img src="images/01_9001-cover.png" alt="9001 五分钟入门" style="width:100%;height:100%;object-fit:cover"><div class="v-play">&#9654;</div><div class="v-dur">3-4分钟</div></div>
-      <div class="v-info"><h3>9001 五分钟入门：什么是质量管理体系？</h3><p>用最简单的话解释 ISO 9001 到底在管什么，为什么它几乎是所有体系的"基础课"。</p></div>
+    <div class="video-card" data-vid="https://aka.doubaocdn.com/s/KyK5b6DdU8" data-platform="web">
+      <div class="v-thumb"><img src="images/01_9001-cover.png" alt="9001 入门概念片" style="width:100%;height:100%;object-fit:cover"><div class="v-play">&#9654;</div><div class="v-dur">15秒</div></div>
+      <div class="v-info"><h3>ISO 9001 入门概念片：什么是质量管理体系？</h3><p>用最简单的话解释 ISO 9001 到底在管什么，为什么它几乎是所有体系的"基础课"。</p></div>
     </div>
     <div class="video-card" data-vid="" data-platform="">
       <div class="v-thumb"><div class="v-play">&#9654;</div><div class="v-dur">即将上线</div></div>
@@ -32,9 +32,9 @@
   <h2>ISO 27001 · 信息安全管理</h2>
   <p class="sub">管住数据安全，赢得客户信任</p>
   <div class="grid3" id="v-27001">
-    <div class="video-card" data-vid="" data-platform="">
-      <div class="v-thumb"><img src="images/02_27001-cover.png" alt="27001 入门" style="width:100%;height:100%;object-fit:cover"><div class="v-play">&#9654;</div><div class="v-dur">3-4分钟</div></div>
-      <div class="v-info"><h3>27001 入门：你的信息安全吗？</h3><p>什么是信息安全管理？哪些信息需要管？用三个真实场景帮你理解。</p></div>
+    <div class="video-card" data-vid="https://aka.doubaocdn.com/s/vsmr94lpVi" data-platform="web">
+      <div class="v-thumb"><img src="images/02_27001-cover.png" alt="27001 入门概念片" style="width:100%;height:100%;object-fit:cover"><div class="v-play">&#9654;</div><div class="v-dur">15秒</div></div>
+      <div class="v-info"><h3>ISO 27001 入门概念片：你的信息安全吗？</h3><p>什么是信息安全管理？哪些信息需要管？用三个真实场景帮你理解。</p></div>
     </div>
     <div class="video-card" data-vid="" data-platform="">
       <div class="v-thumb"><div class="v-play">&#9654;</div><div class="v-dur">即将上线</div></div>
@@ -90,3 +90,32 @@
   <p class="sub">留言告诉我们你最想了解哪个体系、哪个环节，下期可能就是它</p>
   <a href="contact.html" class="btn btn-lg">留言点播</a>
 </div></section>
+
+<style>
+.video-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;z-index:200;padding:24px}
+.video-lightbox.show{display:flex}
+.lightbox-box{position:relative;width:min(960px,94vw)}
+.lightbox-close{position:absolute;top:-46px;right:0;background:none;border:none;color:#fff;font-size:34px;cursor:pointer;line-height:1;z-index:1}
+.lightbox-close:hover{opacity:.7}
+.lightbox-box video{width:100%;border-radius:12px;background:#000;display:block;max-height:80vh}
+</style>
+<div class="video-lightbox" id="videoLightbox">
+  <div class="lightbox-box">
+    <button class="lightbox-close" aria-label="关闭">&times;</button>
+    <video id="lightboxVideo" controls playsinline preload="none"></video>
+  </div>
+</div>
+<script>
+(function(){
+  var lb=document.getElementById('videoLightbox');
+  var vid=document.getElementById('lightboxVideo');
+  var closeBtn=lb.querySelector('.lightbox-close');
+  function close(){lb.classList.remove('show');vid.pause();vid.removeAttribute('src');}
+  document.querySelectorAll('.video-card[data-vid]').forEach(function(c){
+    c.addEventListener('click',function(){vid.src=c.getAttribute('data-vid');lb.classList.add('show');vid.play();});
+  });
+  closeBtn.addEventListener('click',close);
+  lb.addEventListener('click',function(e){if(e.target===lb)close();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+</script>
