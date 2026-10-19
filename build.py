@@ -358,7 +358,7 @@ def build_channel_post(md_file):
 <body>
 <div class="wrap">
   <div class="banner">
-    <div class="tag">体系文件开发团队 · 中小企业 ISO 实务</div>
+    <div class="tag">体系咨询团队 · 中小企业 ISO 实务</div>
     <h1>{title}</h1>
     <div class="date">{date} · 面向中小企业老板 / 管理者</div>
   </div>
